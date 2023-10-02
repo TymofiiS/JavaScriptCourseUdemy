@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(91, 223, 148);
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 15px;
+  padding: 30px;
+  width: 400px;
+}
+
+h1 {
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.first {
+  color: rgb(173, 173, 11);
+}
+
+#your-name {
+  background-color: aqua;
+  border: 10px solid rgb(173, 103, 168);
+  width: 400px;
+  padding: 20px;
+  margin-top: 15px;
+}
+
+#test-image {
+  width: 400px;
+}
+
+input,
+button {
+  padding: 10px;
+  font-size: 15px;
+}
+
+#your-name h2 {
+  background-color: rgb(230, 176, 176);
+  margin: 10px;
+}
