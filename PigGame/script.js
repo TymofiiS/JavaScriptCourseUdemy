@@ -23,20 +23,14 @@ function setInitialState() {
   currentScore = 0;
   currentPlayer = 0;
   playing = true;
-
-  // Set initial value
   score0El.textContent = 0;
   score1El.textContent = 0;
-  diceEl.classList.add('hidden');
 
-  // Remove winner style if exist
+  diceEl.classList.add('hidden');
   playerSection0.classList.remove('player--winner');
   playerSection1.classList.remove('player--winner');
-  playerSection0.classList.remove('player--active');
-  playerSection1.classList.remove('player--active');
-
-  // Set the first user current
   playerSection0.classList.add('player--active');
+  playerSection1.classList.remove('player--active');
 }
 
 function refreshCurrentScore() {
@@ -85,28 +79,23 @@ holdBtn.addEventListener('click', () => {
   if (!playing) return;
 
   totalScope[currentPlayer] += currentScore;
+  document.querySelector(`#score--${currentPlayer}`).textContent =
+    totalScope[currentPlayer];
 
-  // Check if the current layer reach 20 points
+  // Check if the current layer reach 100 points
   // the game over
-  if (totalScope[currentPlayer] >= 20) {
-    totalScope[currentPlayer] = 20;
-
+  if (totalScope[currentPlayer] >= 100) {
     document
       .querySelector(`.player--${currentPlayer}`)
       .classList.add('player--winner');
 
-    document
-      .querySelector(`.player--${currentPlayer}`)
-      .classList.remove('player--active');
-
     diceEl.classList.add('hidden');
 
     playing = false;
+  } else {
+    // Switch player
+    refreshCurrentPlayer();
   }
-
-  document.querySelector(`#score--${currentPlayer}`).textContent =
-    totalScope[currentPlayer];
-  refreshCurrentPlayer();
 });
 
 // Implement new game functionality
