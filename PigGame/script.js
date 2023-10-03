@@ -10,22 +10,59 @@ const newBtn = document.querySelector('.btn--new');
 const rollBtn = document.querySelector('.btn--roll');
 const holdBtn = document.querySelector('.btn--hold');
 
-// Set initial value
-score0El.textContent = 0;
-score1El.textContent = 0;
-diceEl.classList.add('hidden');
+// Declare global variables
+let totalScope;
+let currentScore;
+let currentPlayer;
+let playing;
 
-let totalScope = [0, 0];
-let currentScore = 0;
-let currentPlayer = 0;
+setInitialState();
 
-const refreshCurrentScore = () => {
+function setInitialState() {
+  totalScope = [0, 0];
+  currentScore = 0;
+  currentPlayer = 0;
+  playing = true;
+
+  // Set initial value
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  diceEl.classList.add('hidden');
+
+  // Remove winner style if exist
+  playerSection0.classList.remove('player--winner');
+  playerSection1.classList.remove('player--winner');
+  playerSection0.classList.remove('player--active');
+  playerSection1.classList.remove('player--active');
+
+  // Set the first user current
+  playerSection0.classList.add('player--active');
+}
+
+function refreshCurrentScore() {
   document.querySelector(`#current--${currentPlayer}`).textContent =
     currentScore;
-};
+}
+
+function refreshCurrentPlayer() {
+  currentScore = 0;
+  refreshCurrentScore();
+
+  switchCurrentSection();
+
+  // Switch player
+  currentPlayer = currentPlayer === 0 ? 1 : 0;
+}
+
+function switchCurrentSection() {
+  playerSection0.classList.toggle('player--active');
+  playerSection1.classList.toggle('player--active');
+}
 
 // Implement rolling functionality
 rollBtn.addEventListener('click', () => {
+  if (!playing) return;
+
   // Generate random dice value 1...6
   let diceValue = Math.trunc(Math.random() * 6 + 1);
 
@@ -39,15 +76,38 @@ rollBtn.addEventListener('click', () => {
     currentScore += diceValue;
     refreshCurrentScore();
   } else {
-    // Refresh current player
-    currentScore = 0;
-    refreshCurrentScore();
-
-    // Switch current section
-    playerSection0.classList.toggle('player--active');
-    playerSection1.classList.toggle('player--active');
-
-    // Switch player
-    currentPlayer = currentPlayer === 0 ? 1 : 0;
+    refreshCurrentPlayer();
   }
 });
+
+// Implement hold functionality
+holdBtn.addEventListener('click', () => {
+  if (!playing) return;
+
+  totalScope[currentPlayer] += currentScore;
+
+  // Check if the current layer reach 20 points
+  // the game over
+  if (totalScope[currentPlayer] >= 20) {
+    totalScope[currentPlayer] = 20;
+
+    document
+      .querySelector(`.player--${currentPlayer}`)
+      .classList.add('player--winner');
+
+    document
+      .querySelector(`.player--${currentPlayer}`)
+      .classList.remove('player--active');
+
+    diceEl.classList.add('hidden');
+
+    playing = false;
+  }
+
+  document.querySelector(`#score--${currentPlayer}`).textContent =
+    totalScope[currentPlayer];
+  refreshCurrentPlayer();
+});
+
+// Implement new game functionality
+newBtn.addEventListener('click', setInitialState);
