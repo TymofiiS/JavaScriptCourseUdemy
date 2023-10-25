@@ -140,3 +140,20 @@ console.log(add(...x5));
 
 restaurant.orderPizza('Main ing', 'other1', 'other2');
 restaurant.orderPizza('Main ing');
+
+// Logical operators
+console.log(3 || 'True');
+console.log('' || 'True');
+console.log(true || 0);
+console.log(undefined || null);
+
+const ng = restaurant.NumGests ? restaurant.NumGests : 5;
+console.log(ng);
+
+const ng1 = restaurant.NumGests || 5;
+console.log(ng1);
+
+console.log(3 && 'True');
+console.log('' && 'True');
+console.log(true && 0);
+console.log(undefined && null);
