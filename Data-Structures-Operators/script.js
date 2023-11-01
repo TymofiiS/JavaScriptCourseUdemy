@@ -157,3 +157,47 @@ console.log(3 && 'True');
 console.log('' && 'True');
 console.log(true && 0);
 console.log(undefined && null);
+console.log('test');
+
+// Usigned operator
+const t = null;
+const p = t ?? 'default value';
+console.log(p);
+
+const rest1 = {
+  name: 'Capri',
+  numGuests: 0,
+};
+
+const rest2 = {
+  name: 'Bobrest',
+  owner: 'Bob',
+};
+
+/*
+rest1.numGuests ||= 10;
+rest2.numGuests ||= 10;
+*/
+
+rest1.numGuests ??= 10;
+rest2.numGuests ??= 10;
+
+rest1.owner &&= 'Anonim';
+rest2.owner &&= 'Anonim';
+
+console.log(rest1);
+console.log(rest2);
+
+const quest = new Map([
+  [1, 'A'],
+  [2, 'B'],
+  [3, 'C'],
+  ['correct', 2],
+  [true, 'Correct'],
+  [false, 'Incorrect'],
+]);
+const answer = 2; //Number(prompt('Choise:'));
+console.log(quest.get(answer === quest.get('correct')));
+console.log(quest);
+
+for (let [k, v] of quest) console.log(`${k}: ${v}`);
